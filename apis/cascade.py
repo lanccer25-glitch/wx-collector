@@ -769,6 +769,7 @@ async def upload_articles(
         # 保存文章到数据库
         new_count = 0
         content_count = 0
+        new_article_urls = []
         for article_data in req.articles:
             raw_content = (article_data.get("content") or "").strip()
 
@@ -798,6 +799,9 @@ async def upload_articles(
                 new_count += 1
                 if raw_content:
                     content_count += 1
+                _article_url = (article_data.get("url") or "").strip()
+                if _article_url:
+                    new_article_urls.append(_article_url)
             else:
                 # 更新现有文章（只要上行的字段有值就覆盖）
                 existing.title = article_data.get("title") or existing.title
@@ -819,7 +823,19 @@ async def upload_articles(
             f"接收文章数据: {len(req.articles)}篇, 新增{new_count}篇, "
             f"补充正文{content_count}篇"
         )
-        
+
+        # 为新增文章触发 Notion 同步（后台线程，不阻塞响应）
+        if new_article_urls:
+            import threading
+            from jobs.article import _fetch_content_and_sync_notion
+            for _url in new_article_urls:
+                threading.Thread(
+                    target=_fetch_content_and_sync_notion,
+                    args=(_url,),
+                    daemon=True,
+                ).start()
+            print_success(f"已为 {len(new_article_urls)} 篇新文章触发 Notion 同步")
+
         return success_response({
             "received": len(req.articles),
             "new_count": new_count
