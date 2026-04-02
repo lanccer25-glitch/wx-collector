@@ -104,7 +104,7 @@ def add_job(feeds:list[Feed]=None,task:MessageTask=None,isTest=False):
 import json
 def get_feeds(task:MessageTask=None):
      mps = json.loads(task.mps_id)
-     ids=",".join([item["id"]for item in mps])
+     ids=",".join([item["id"] if isinstance(item, dict) else item for item in mps])
      mps=wx_db.get_mps_list(ids)
      if len(mps)==0:
         mps=wx_db.get_all_mps()

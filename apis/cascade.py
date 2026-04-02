@@ -822,6 +822,11 @@ async def upload_articles(
 
         session.commit()
 
+        # 诊断日志：打印每篇文章的正文状态
+        for _a in req.articles:
+            _clen = len(((_a.get("content") or "")).strip())
+            print_info(f"[上行] {(_a.get('title') or '')[:30]} | 正文{_clen}字")
+
         print_success(
             f"接收文章数据: {len(req.articles)}篇, 新增{new_count}篇, "
             f"补充正文{content_count}篇"
