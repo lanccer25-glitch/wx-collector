@@ -886,6 +886,49 @@ async def report_completion(
         return error_response(code=500, message=str(e))
 
 
+@router.get("/sync-session", summary="子节点同步父节点 Session 文件")
+async def sync_session(
+    current_user: dict = Depends(get_current_user_or_ak)
+):
+    """
+    子节点通过 Cascade AK/SK 认证获取父节点 data/key.lic 的 base64 内容，
+    用于自动同步微信公众平台 Session，避免子节点因 Invalid Session 采集失败。
+    """
+    import base64
+    import os
+
+    key_file = "data/key.lic"
+    if not os.path.exists(key_file):
+        return error_response(
+            code=404,
+            message="父节点 session 文件不存在，请先在父节点完成微信扫码登录"
+        )
+
+    try:
+        with open(key_file, "rb") as f:
+            raw = f.read()
+
+        # 粗略检验：尝试解码，若解密失败说明文件已损坏
+        from driver.store import Store
+        cookies = Store.load()
+        if not cookies:
+            return error_response(code=404, message="父节点 session 已过期或无法解密")
+
+        from driver.cookies import expire as _expire
+        exp = _expire(cookies)
+
+        return success_response({
+            "session_b64": base64.b64encode(raw).decode("utf-8"),
+            "file_size": len(raw),
+            "cookie_count": len(cookies),
+            "expiry": exp,
+        }, "session 获取成功")
+
+    except Exception as e:
+        print_error(f"获取 session 失败: {str(e)}")
+        return error_response(code=500, message=str(e))
+
+
 @router.post("/dispatch-task", summary="手动触发任务分发")
 async def dispatch_tasks(
     task_id: Optional[str] = Query(None, description="任务ID，不指定则分发所有任务"),

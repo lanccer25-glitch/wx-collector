@@ -507,7 +507,43 @@ class CascadeSyncService:
         await self.claim_and_execute_task()
         
         print_success("完整同步完成")
-    
+
+    async def sync_session_from_parent(self) -> bool:
+        """从父节点同步 data/key.lic（微信公众平台 Session）。
+
+        子节点启动时立即调用一次，之后每 SESSION_SYNC_INTERVAL 秒（默认 3600）自动刷新，
+        确保多台子节点始终共享父节点上有效的微信 Session。
+
+        返回: True 表示同步成功，False 表示失败（不影响后续流程）
+        """
+        if not self.client:
+            return False
+        try:
+            print_info("正在从父节点同步 Session...")
+            result = await self.client.sync_session()
+            session_b64 = result.get("data", {}).get("session_b64", "")
+            if not session_b64:
+                print_warning("父节点未返回 session 数据（可能父节点 session 已过期）")
+                return False
+
+            import base64
+            session_bytes = base64.b64decode(session_b64)
+            os.makedirs("data", exist_ok=True)
+            with open("data/key.lic", "wb") as f:
+                f.write(session_bytes)
+
+            cookie_count = result.get("data", {}).get("cookie_count", "?")
+            expiry = result.get("data", {}).get("expiry", {})
+            expiry_time = expiry.get("expiry_time", "未知") if isinstance(expiry, dict) else "未知"
+            print_success(
+                f"Session 同步成功，{cookie_count} 个 cookie，"
+                f"过期时间: {expiry_time}，文件大小: {len(session_bytes)} bytes"
+            )
+            return True
+        except Exception as e:
+            print_error(f"同步 Session 失败（不影响其他功能）: {e}")
+            return False
+
     async def start_periodic_sync(self):
         """启动定期同步服务（心跳和数据同步）
 
@@ -519,11 +555,19 @@ class CascadeSyncService:
         self.running = True
         print_info(f"启动定期同步服务，同步间隔: {self.sync_interval}秒")
 
+        # 立即触发一次 session 同步（counter 初始值设为阈值）
+        SESSION_SYNC_INTERVAL = 3600
         sync_counter = 0
+        session_sync_counter = SESSION_SYNC_INTERVAL
 
         try:
             while self.running:
                 try:
+                    # Session 同步：启动即触发，之后每小时一次
+                    if session_sync_counter >= SESSION_SYNC_INTERVAL:
+                        await self.sync_session_from_parent()
+                        session_sync_counter = 0
+
                     # 每隔 sync_interval 秒执行一次完整同步（包括心跳）
                     if sync_counter >= self.sync_interval:
                         await self.full_sync()
@@ -539,6 +583,7 @@ class CascadeSyncService:
                 heartbeat_interval = min(60, self.sync_interval // 5) if self.sync_interval > 60 else 60
                 await asyncio.sleep(heartbeat_interval)
                 sync_counter += heartbeat_interval
+                session_sync_counter += heartbeat_interval
 
         except asyncio.CancelledError:
             print_info("定期同步服务已停止")

@@ -515,6 +515,14 @@ class CascadeClient:
         result = await self._request("POST", "/api/v1/wx/cascade/report-completion", data=data)
         return result
 
+    async def sync_session(self) -> dict:
+        """
+        从父节点获取 session 文件内容（base64 编码）。
+        子节点调用后将 base64 解码写入 data/key.lic 即可共享父节点微信 Session。
+        """
+        result = await self._request("GET", "/api/v1/wx/cascade/sync-session")
+        return result
+
 
 # 全局级联管理器实例
 cascade_manager = CascadeManager()
