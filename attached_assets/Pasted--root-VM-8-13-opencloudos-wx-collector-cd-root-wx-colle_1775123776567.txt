@@ -1,0 +1,42 @@
+[root@VM-8-13-opencloudos wx-collector]# cd /root/wx-collector
+python scripts/wx_login_child.py
+bash: python: command not found
+[root@VM-8-13-opencloudos wx-collector]# python3 scripts/wx_login_child.py
+
+============================================================
+  微信公众平台扫码登录 — 子节点登录工具
+============================================================
+名称:we-mp-rss
+版本:1.4.9 API_BASE:/api/v1/wx
+[INFO] 已有有效 session，过期时间: 2026-04-03 17:10:24 (剩余 24.0 小时)
+
+已有有效 session，是否仍要重新登录？(y/N): y
+
+[INFO] 启动临时 HTTP server (port 9999) ...
+[INFO] 二维码访问地址: http://10.1.8.13:9999/qr.png
+[INFO] 正在启动无头浏览器，请稍候...
+
+启动浏览器: firefox, 无头模式: True, 移动模式: False, 反爬虫: False
+浏览器启动失败，尝试回退: BrowserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/firefox-1490/firefox/firefox
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just 
+BrowserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/firefox-1490/firefox/firefox
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+Docker环境;您可以设置环境变量INSTALL=True并重启Docker自动安装浏览器环境;如需要切换浏览器可以设置环境变量BROWSER_TYPE=firefox 支持(firefox,webkit,chromium),开发环境请手工安装
+[ERROR] 登录流程异常: BrowserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/firefox-1490/firefox/firefox
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+Docker环境;您可以设置环境变量INSTALL=True并重启Docker自动安装浏览器环境;如需要切换浏览器可以设置环境变量BROWSER_TYPE=firefox 支持(firefox,webkit,chromium),开发环境请手工安装
