@@ -13,6 +13,8 @@ from core.models.message_task import MessageTask
 from .base import success_response, error_response
 from core.print import print_info, print_success, print_error
 import json
+import os
+import base64
 
 router = APIRouter(prefix="/cascade", tags=["级联管理"])
 
@@ -894,9 +896,6 @@ async def sync_session(
     子节点通过 Cascade AK/SK 认证获取父节点 data/key.lic 的 base64 内容，
     用于自动同步微信公众平台 Session，避免子节点因 Invalid Session 采集失败。
     """
-    import base64
-    import os
-
     key_file = "data/key.lic"
     if not os.path.exists(key_file):
         return error_response(
@@ -917,8 +916,19 @@ async def sync_session(
         from driver.cookies import expire as _expire
         exp = _expire(cookies)
 
+        # 同时返回 wx.lic（包含 token/cookie_str，供 do_job() 直接使用）
+        wx_lic_b64 = ""
+        wx_lic_path = "data/wx.lic"
+        if os.path.exists(wx_lic_path):
+            try:
+                with open(wx_lic_path, "r", encoding="utf-8") as wf:
+                    wx_lic_b64 = base64.b64encode(wf.read().encode("utf-8")).decode("utf-8")
+            except Exception:
+                pass
+
         return success_response({
             "session_b64": base64.b64encode(raw).decode("utf-8"),
+            "wx_lic_b64": wx_lic_b64,
             "file_size": len(raw),
             "cookie_count": len(cookies),
             "expiry": exp,

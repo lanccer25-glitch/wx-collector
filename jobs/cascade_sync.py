@@ -532,6 +532,20 @@ class CascadeSyncService:
             with open("data/key.lic", "wb") as f:
                 f.write(session_bytes)
 
+            # 同步 wx.lic（包含 token 字符串和 cookie_str，do_job() 直接读取这个文件）
+            wx_lic_b64 = result.get("data", {}).get("wx_lic_b64", "")
+            if wx_lic_b64:
+                try:
+                    wx_lic_content = base64.b64decode(wx_lic_b64).decode("utf-8")
+                    with open("data/wx.lic", "w", encoding="utf-8") as wf:
+                        wf.write(wx_lic_content)
+                    # 重载内存中的 token 配置，让 WxGather 立即使用新 token
+                    from driver.token import wx_cfg as _wx_cfg
+                    _wx_cfg.reload()
+                    print_success("wx.lic 同步成功（token/cookie_str 已更新）")
+                except Exception as we:
+                    print_warning(f"wx.lic 同步失败（不影响 key.lic）: {we}")
+
             cookie_count = result.get("data", {}).get("cookie_count", "?")
             expiry = result.get("data", {}).get("expiry", {})
             expiry_time = expiry.get("expiry_time", "未知") if isinstance(expiry, dict) else "未知"
