@@ -1,0 +1,240 @@
+[root@VM-8-13-opencloudos wx-collector]# pm2 start "python3 main.py -job True -init True" --name wx-collector
+[PM2] Starting /usr/bin/bash in fork_mode (1 instance)
+[PM2] Done.
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 1  │ ad-popup-api       │ fork     │ 5    │ online    │ 0%       │ 67.0mb   │
+│ 0  │ wechat-img-proxy   │ fork     │ 6    │ online    │ 0%       │ 69.6mb   │
+│ 2  │ wx-collector       │ fork     │ 0    │ online    │ 0%       │ 4.5mb    │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+[root@VM-8-13-opencloudos wx-collector]# pm2 logs wx-collector --lines 30
+[TAILING] Tailing last 30 lines for [wx-collector] process (change the value with --lines option)
+/root/.pm2/logs/wx-collector-out.log last 30 lines:
+2|wx-colle |   libatk-1.0.so: []
+2|wx-colle |   libgbm.so: []
+2|wx-colle |   libasound.so: []
+2|wx-colle |   libxkbcommon.so: []
+2|wx-colle |   libXcomposite.so: []
+2|wx-colle | === 诊断结束 ===
+2|wx-colle | 使用本地已安装Playwright浏览器: /home/runner/workspace/.playwright-browsers/chromium-1187/chrome-linux/chrome
+2|wx-colle | 启动服务器
+2|wx-colle | [默认]连接初始化
+2|wx-colle | [用户连接]连接初始化
+2|wx-colle | All Tables Created Successfully!
+2|wx-colle | 模型同步完成
+2|wx-colle | 用户 root 已存在，跳过初始化
+2|wx-colle | [文章采集API]连接初始化
+2|wx-colle | [任务调度]连接初始化
+2|wx-colle | 队列任务后台运行
+2|wx-colle | 级联同步服务初始化成功，父节点地址: https://haodegongzhognhaorss.replit.app
+2|wx-colle | 启动定期同步服务，同步间隔: 300秒
+2|wx-colle | 正在从父节点同步 Session...
+2|wx-colle | 级联同步服务已启动，任务拉取间隔: 30秒
+2|wx-colle | 启动子节点任务拉取器
+2|wx-colle | 已开启定时任务
+2|wx-colle | 子节点任务拉取器启动成功
+2|wx-colle | [默认]连接初始化
+2|wx-colle | [内容修正]连接初始化
+2|wx-colle | 队列任务后台运行
+2|wx-colle | 队列已清空
+2|wx-colle | 已添自动同步文章内容任务: b82e2fc0-7ea4-4621-848e-0c4b03c2f934
+2|wx-colle | 已开启自动修正文章任务
+2|wx-colle | 没有任务
+
+/root/.pm2/logs/wx-collector-error.log last 30 lines:
+2|wx-colle | INFO:Sync:成功加载模型模块: cascade_task_allocation
+2|wx-colle | INFO:Sync:成功加载模型模块: config_management
+2|wx-colle | INFO:Sync:成功加载模型模块: feed
+2|wx-colle | INFO:Sync:成功加载模型模块: message_task
+2|wx-colle | INFO:Sync:成功加载模型模块: message_task_log
+2|wx-colle | INFO:Sync:成功加载模型模块: tags
+2|wx-colle | INFO:Sync:成功加载模型模块: user
+2|wx-colle | INFO:Sync:表已同步: access_keys
+2|wx-colle | INFO:Sync:表已同步: articles
+2|wx-colle | INFO:Sync:表已同步: cascade_nodes
+2|wx-colle | INFO:Sync:表已同步: cascade_sync_logs
+2|wx-colle | INFO:Sync:表已同步: cascade_task_allocations
+2|wx-colle | INFO:Sync:表已同步: config_management
+2|wx-colle | INFO:Sync:表已同步: feeds
+2|wx-colle | INFO:Sync:表已同步: message_tasks
+2|wx-colle | INFO:Sync:表已同步: message_tasks_logs
+2|wx-colle | INFO:Sync:表已同步: tags
+2|wx-colle | INFO:Sync:表已同步: users
+2|wx-colle | INFO:Sync:模型同步完成
+2|wx-colle | 2026-04-02 15:47:35 - INFO - Adding cron job with expression: */59 * * * *
+2|wx-colle | INFO:core.log:Adding cron job with expression: */59 * * * *
+2|wx-colle | INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2|wx-colle | 2026-04-02 15:47:35 - INFO - Successfully added job  b82e2fc0-7ea4-4621-848e-0c4b03c2f934
+2|wx-colle | INFO:core.log:Successfully added job  b82e2fc0-7ea4-4621-848e-0c4b03c2f934
+2|wx-colle | 2026-04-02 15:47:35 - INFO - Starting scheduler...
+2|wx-colle | INFO:core.log:Starting scheduler...
+2|wx-colle | 2026-04-02 15:47:35 - WARNING - Scheduler atexit warning (non-fatal): can't register atexit after shutdown
+2|wx-colle | WARNING:core.log:Scheduler atexit warning (non-fatal): can't register atexit after shutdown
+2|wx-colle | 2026-04-02 15:47:35 - INFO - [心跳] 保活服务已启动，检测间隔: 20 分钟
+2|wx-colle | INFO:core.log:[心跳] 保活服务已启动，检测间隔: 20 分钟
+
+2|wx-collector  | 名称:we-mp-rss
+2|wx-collector  | 版本:1.4.9 API_BASE:/api/v1/wx
+2|wx-collector  | 认证方式：Web认证=False
+2|wx-collector  | Redis URL未配置，统计功能将禁用
+2|wx-collector  | 环境变量:
+2|wx-collector  | SHELL=/bin/bash
+2|wx-collector  | NVM_INC=/root/.nvm/versions/node/v22.22.0/include/node
+2|wx-collector  | unstable_restarts=0
+2|wx-collector  | HISTCONTROL=ignoredups
+2|wx-collector  | treekill=true
+2|wx-collector  | HOSTNAME=VM-8-13-opencloudos
+2|wx-collector  | HISTSIZE=1000
+2|wx-collector  | env=[object Object]
+2|wx-collector  | filter_env=
+2|wx-collector  | namespace=default
+2|wx-collector  | MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+2|wx-collector  | restart_time=4
+2|wx-collector  | PIDFILE=/run/tat_agent.pid
+2|wx-collector  | axm_options=[object Object]
+2|wx-collector  | vizion_running=false
+2|wx-collector  | PWD=/root/wx-collector
+2|wx-collector  | LOGNAME=root
+2|wx-collector  | SYSTEMD_EXEC_PID=2399923
+2|wx-collector  | PM2_USAGE=CLI
+2|wx-collector  | args=-c,python3 main.py -job True -init True
+2|wx-collector  | _=/usr/bin/python3
+2|wx-collector  | exec_interpreter=none
+2|wx-collector  | PM2_HOME=/root/.pm2
+2|wx-collector  | HOME=/root
+2|wx-collector  | USERNAME=root
+2|wx-collector  | NODE_APP_INSTANCE=0
+2|wx-collector  | LANG=en_US.UTF-8
+2|wx-collector  | LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=01;36:*.au=01;36:*.flac=01;36:*.m4a=01;36:*.mid=01;36:*.midi=01;36:*.mka=01;36:*.mp3=01;36:*.mpc=01;36:*.ogg=01;36:*.ra=01;36:*.wav=01;36:*.oga=01;36:*.opus=01;36:*.spx=01;36:*.xspf=01;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:
+2|wx-collector  | pm_id=2
+2|wx-collector  | MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/system.slice/tat_agent.service/memory.pressure
+2|wx-collector  | SSL_CERT_DIR=/etc/pki/tls/certs
+2|wx-collector  | version=N/A
+2|wx-collector  | pm_uptime=1775116056180
+2|wx-collector  | km_link=false
+2|wx-collector  | pm_cwd=/root/wx-collector
+2|wx-collector  | INVOCATION_ID=c4df84a5c67948f0a149e2d5584014d6
+2|wx-collector  | autostart=true
+2|wx-collector  | axm_monitor=[object Object]
+2|wx-collector  | instance_var=NODE_APP_INSTANCE
+2|wx-collector  | pmx=true
+2|wx-collector  | exit_code=1
+2|wx-collector  | NVM_DIR=/root/.nvm
+2|wx-collector  | unique_id=94426ca1-e7db-4369-9b8f-a2abb54cf62a
+2|wx-collector  | TERM=xterm-256color
+2|wx-collector  | vizion=true
+2|wx-collector  | username=root
+2|wx-collector  | LESSOPEN=||/usr/bin/lesspipe.sh %s
+2|wx-collector  | USER=root
+2|wx-collector  | watch=false
+2|wx-collector  | OPENCLAW_GATEWAY_TOKEN=dce31ed1c54a8bc5b8a6b7f12510e72e3716b2b92d153579
+2|wx-collector  | windowsHide=true
+2|wx-collector  | instances=1
+2|wx-collector  | automation=true
+2|wx-collector  | axm_actions=
+2|wx-collector  | SHLVL=1
+2|wx-collector  | NVM_CD_FLAGS=
+2|wx-collector  | WECOM_CORP_SECRET=JkCE5Yy4Ix-525WpXvpIK_Xe6afXv2Ks2GUmJp_cGiE
+2|wx-collector  | NOTION_API_KEY=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
+2|wx-collector  | DEEPSEEK_API_KEY=sk-0ae77f24aa8c4198ada91cf688f62e57
+2|wx-collector  | SSL_CERT_FILE=/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+2|wx-collector  | created_at=1775116035356
+2|wx-collector  | which_declare=declare -f
+2|wx-collector  | NODE_CHANNEL_SERIALIZATION_MODE=json
+2|wx-collector  | merge_logs=true
+2|wx-collector  | pm_pid_path=/root/.pm2/pids/wx-collector-2.pid
+2|wx-collector  | JOURNAL_STREAM=8:495546808
+2|wx-collector  | PATH=/root/.nvm/versions/node/v22.22.0/bin:/root/.local/bin:/root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+2|wx-collector  | pm_err_log_path=/root/.pm2/logs/wx-collector-error.log
+2|wx-collector  | MAIL=/var/spool/mail/root
+2|wx-collector  | NVM_BIN=/root/.nvm/versions/node/v22.22.0/bin
+2|wx-collector  | kill_retry_time=100
+2|wx-collector  | axm_dynamic=[object Object]
+2|wx-collector  | autorestart=true
+2|wx-collector  | node_args=
+2|wx-collector  | exec_mode=fork_mode
+2|wx-collector  | pm_exec_path=/usr/bin/bash
+2|wx-collector  | NODE_CHANNEL_FD=3
+2|wx-collector  | OLDPWD=/root/wx-collector/static
+2|wx-collector  | status=launching
+2|wx-collector  | name=wx-collector
+2|wx-collector  | pm_out_log_path=/root/.pm2/logs/wx-collector-out.log
+2|wx-collector  | BASH_FUNC_which%%=() {  ( alias;
+2|wx-collector  |  eval ${which_declare} ) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+2|wx-collector  | }
+2|wx-collector  | PLAYWRIGHT_NODEJS_PATH → /root/.nvm/versions/node/v22.22.0/bin/node
+2|wx-collector  | playwright driver/node 已是 wrapper 脚本，跳过文件替换
+2|wx-collector  | === Playwright 生产环境诊断 ===
+2|wx-collector  | apt-get 存在: False
+2|wx-collector  | Nix chrome 路径: 
+2|wx-collector  | Nix chrome 存在: False
+2|wx-collector  | Playwright 下载的 chrome: ['/root/.cache/ms-playwright/chromium-1187/chrome-linux/chrome']
+2|wx-collector  |   libatk-1.0.so: []
+2|wx-collector  |   libgbm.so: []
+2|wx-collector  |   libasound.so: []
+2|wx-collector  |   libxkbcommon.so: []
+2|wx-collector  |   libXcomposite.so: []
+2|wx-collector  | === 诊断结束 ===
+2|wx-collector  | 使用本地已安装Playwright浏览器: /home/runner/workspace/.playwright-browsers/chromium-1187/chrome-linux/chrome
+2|wx-collector  | 启动服务器
+2|wx-collector  | INFO:     Will watch for changes in these directories: ['/root/wx-collector/apis', '/root/wx-collector/core', '/root/wx-collector/driver', '/root/wx-collector/jobs', '/root/wx-collector/schemas', '/root/wx-collector/tools', '/root/wx-collector/views', '/root/wx-collector/web_ui']
+2|wx-collector  | ERROR:    [Errno 98] Address already in use
+2|wx-collector  | [默认]连接初始化
+2|wx-collector  | [用户连接]连接初始化
+2|wx-collector  | All Tables Created Successfully!
+2|wx-collector  | INFO:Sync:cascade_task_allocations.node_id 已是 nullable，跳过迁移
+2|wx-collector  | INFO:Sync:articles.updated_at_millis 已是 BIGINT，跳过迁移
+2|wx-collector  | INFO:Sync:成功加载模型模块: access_key
+2|wx-collector  | INFO:Sync:成功加载模型模块: article
+2|wx-collector  | INFO:Sync:成功加载模型模块: base
+2|wx-collector  | INFO:Sync:成功加载模型模块: cascade_node
+2|wx-collector  | INFO:Sync:成功加载模型模块: cascade_task_allocation
+2|wx-collector  | INFO:Sync:成功加载模型模块: config_management
+2|wx-collector  | INFO:Sync:成功加载模型模块: feed
+2|wx-collector  | INFO:Sync:成功加载模型模块: message_task
+2|wx-collector  | INFO:Sync:成功加载模型模块: message_task_log
+2|wx-collector  | INFO:Sync:成功加载模型模块: tags
+2|wx-collector  | INFO:Sync:成功加载模型模块: user
+2|wx-collector  | INFO:Sync:表已同步: access_keys
+2|wx-collector  | INFO:Sync:表已同步: articles
+2|wx-collector  | INFO:Sync:表已同步: cascade_nodes
+2|wx-collector  | INFO:Sync:表已同步: cascade_sync_logs
+2|wx-collector  | INFO:Sync:表已同步: cascade_task_allocations
+2|wx-collector  | INFO:Sync:表已同步: config_management
+2|wx-collector  | INFO:Sync:表已同步: feeds
+2|wx-collector  | INFO:Sync:表已同步: message_tasks
+2|wx-collector  | INFO:Sync:表已同步: message_tasks_logs
+2|wx-collector  | INFO:Sync:表已同步: tags
+2|wx-collector  | INFO:Sync:表已同步: users
+2|wx-collector  | INFO:Sync:模型同步完成
+2|wx-collector  | 模型同步完成
+2|wx-collector  | 用户 root 已存在，跳过初始化
+2|wx-collector  | [文章采集API]连接初始化
+2|wx-collector  | [任务调度]连接初始化
+2|wx-collector  | 队列任务后台运行
+2|wx-collector  | 级联同步服务初始化成功，父节点地址: https://haodegongzhognhaorss.replit.app
+2|wx-collector  | 启动定期同步服务，同步间隔: 300秒
+2|wx-collector  | 正在从父节点同步 Session...
+2|wx-collector  | 级联同步服务已启动，任务拉取间隔: 30秒
+2|wx-collector  | 启动子节点任务拉取器
+2|wx-collector  | 已开启定时任务
+2|wx-collector  | [默认]连接初始化
+2|wx-collector  | 子节点任务拉取器启动成功
+2|wx-collector  | [内容修正]连接初始化
+2|wx-collector  | 没有任务
+2|wx-collector  | 队列任务后台运行
+2|wx-collector  | 队列已清空
+2|wx-collector  | 2026-04-02 15:47:44 - INFO - Adding cron job with expression: */59 * * * *
+2|wx-collector  | INFO:core.log:Adding cron job with expression: */59 * * * *
+2|wx-collector  | INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2|wx-collector  | 2026-04-02 15:47:44 - INFO - Successfully added job  41013a9c-b040-4cb1-b114-83f3e88c28dd
+2|wx-collector  | INFO:core.log:Successfully added job  41013a9c-b040-4cb1-b114-83f3e88c28dd
+2|wx-collector  | 2026-04-02 15:47:44 - INFO - Starting scheduler...
+2|wx-collector  | 已添自动同步文章内容任务: 41013a9c-b040-4cb1-b114-83f3e88c28dd
+2|wx-collector  | INFO:core.log:Starting scheduler...
+2|wx-collector  | 2026-04-02 15:47:44 - WARNING - Scheduler atexit warning (non-fatal): can't register atexit after shutdown
+2|wx-collector  | WARNING:core.log:Scheduler atexit warning (non-fatal): can't register atexit after shutdown
+2|wx-collector  | 已开启自动修正文章任务
+2|wx-collector  | 2026-04-02 15:47:44 - INFO - [心跳] 保活服务已启动，检测间隔: 20 分钟
+2|wx-collector  | INFO:core.log:[心跳] 保活服务已启动，检测间隔: 20 分钟
