@@ -1,0 +1,176 @@
+ 2026-04-02 17:29:22 - INFO - Content将以html格式发送
+2|wx-collector  | INFO:core.log:Content将以html格式发送
+2|wx-collector  | 2026-04-02 17:29:22 - INFO - Webhook payload: {
+2|wx-collector  |   "feed": {
+2|wx-collector  |     "id": "MP_WXS_3204143435",
+2|wx-collector  |     "name": "可乐丽则武齿科KurarayNoritake"
+2|wx-collector  |   },
+2|wx-collector  |   "articles": [
+2|wx-collector  |     
+2|wx-collector  |      
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527845_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "🎉 2026华南国际口腔展，期待您的到来",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/mmecoa_jpg/Y7LNibfcjhR0xPicG6187tNfia8IchhXeLezER5HDY10ibmSVGv741ZB6Miav9Okaica3LF20sAHlp0JDQlCM7xQuvdIBtxExUgCTgib6j9bOzTbZQ/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/JmAVv27H8hMy__J6qKzMRQ",
+2|wx-collector  |           "description": "🎉 2026华南口腔展，可乐丽则武齿科邀您共襄盛举！
+2|wx-collector  | 📅 展会时间：3月3日-6日
+2|wx-collector  | 📍 展位号：19.2馆 C03
+2|wx-collector  | 🌟 重磅课程推荐
+2|wx-collector  | 3月3日「可乐丽医技结合美学修复专场」
+2|wx-collector  | 👨🏻‍🏫 名师亲授，干货满满
+2|wx-collector  | 🎁 到场即享惊喜礼品，名额有限，先到先得！
+2|wx-collector  | 👉 我们在二楼会议室 204等您，不见不散！
+2|wx-collector  | 扫描图6二维码获取预登记二维码",
+2|wx-collector  |           "publish_time": "2026-02-12 18:43:54"
+2|wx-collector  |         },
+2|wx-collector  |       
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527799_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "展会预告|深圳国际口腔医学高新技术博览会",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/sz_mmecoa_jpg/DIeZoExeyG1icaSiaEeyk0EOcqCWu033zbsfKsdbibvbBt2LUp35ntjTUwQFVmjzhlpd3ZEtGiaJ5kIgT6OykkX6kA/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/bzxuVZJtg35f-tLHwP3rkw",
+2|wx-collector  |           "description": "可乐丽则武齿科与您相约深圳，12月3-5日 深圳国际会展中心见！",
+2|wx-collector  |           "publish_time": "2025-11-24 20:00:00"
+2|wx-collector  |         },
+2|wx-collector  |       
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527774_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "10.23-26日 上海世博口腔展开幕在即！",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/sz_mmecoa_jpg/DIeZoExeyG1vpWrRhwRHoib9ic9ictickTcBGb5znBQjejLtzCOaaHOr3VpMkB4SiaS1tumdlRbVEDyBQre0mmmfDibA/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/ltmYsZwQ9f47HrOtMe8hFg",
+2|wx-collector  |           "description": "一号馆 B06 B37 更多精彩等你来探寻！",
+2|wx-collector  |           "publish_time": "2025-10-20 20:34:14"
+2|wx-collector  |         },
+2|wx-collector  |       
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527765_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "9月9-12日 | FDI 2025世界口腔医学大会 开幕在即！",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/sz_mmecoa_jpg/DIeZoExeyG0uUpXnJ5z0HFdgYLTvR5YnWgyFK38sApWic7gLCaucEvITwZrAPthb589A9FhBMjgyBl63NvanykA/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/1xFJjx3CHM5_qed6VmT35A",
+2|wx-collector  |           "description": "📣 9月9-12日 | FDI 2025世界口腔医学大会 可乐丽则武齿科在 6.2号馆 N01 等你来！",
+2|wx-collector  |           "publish_time": "2025-08-22 20:00:00"
+2|wx-collector  |         },
+2|wx-collector  |       
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527755_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "📣 9月9-12日 | FDI 2025世界口腔医学大会 可乐丽则武齿科在 6.2号馆 N01 等你！",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/sz_mmecoa_jpg/DIeZoExeyG1akFOIZWz73WJicnDXNRgynLP2Rl81Qiclkpmj2xlO01WdvBm9flibAhXQqibSzW5DjlIJ8jTOFRFwcg/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/jwRqgueC2Mbl5DcOwsbnRw",
+2|wx-collector  |           "description": "👀&nbsp;看点速览：
+2|wx-collector  | 130+&nbsp;国家、3.5万+&nbsp;专业观众同场交流
+2|wx-collector  | 300+&nbsp;全球大咖现场分享前沿洞见
+2|wx-collector  | 700+&nbsp;精选展商，一站看遍口腔黑科技
+2|wx-collector  | 🌟&nbsp;我们的亮点：
+2|wx-collector  | ✅&nbsp;展位打卡——爆款产品放大模型，快来寻找你的同款打卡即送惊喜礼品！
+2|wx-collector  | ✅&nbsp;现场&nbsp;DEMO——专业技术人员现场解答产品痛点，带你了解不一样的“”修复好帮手”
+2|wx-collector  | ✅&nbsp;惊喜活动抢先看——查看图6活动海报，提前了解并参与丰富活动！📅&nbsp;时间：2025.9.9-9.12长按图5识别二维码，立即预约参观➡",
+2|wx-collector  |           "publish_time": "2025-08-15 20:02:02"
+2|wx-collector  |         }
+2|wx-collector  |       
+2|wx-collector  |     
+2|wx-collector  |   ],
+2|wx-collector  |   "task": {
+2|wx-collector  |     "id": "1c254976-ba07-4622-89b7-29ac7098da60",
+2|wx-collector  |     "name": "全量采集"
+2|wx-collector  |   },
+2|wx-collector  |   "now": "2026-04-02 17:29:22"
+2|wx-collector  | }
+2|wx-collector  | INFO:core.log:Webhook payload: {
+2|wx-collector  |   "feed": {
+2|wx-collector  |     "id": "MP_WXS_3204143435",
+2|wx-collector  |     "name": "可乐丽则武齿科KurarayNoritake"
+2|wx-collector  |   },
+2|wx-collector  |   "articles": [
+2|wx-collector  |     
+2|wx-collector  |      
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527845_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "🎉 2026华南国际口腔展，期待您的到来",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/mmecoa_jpg/Y7LNibfcjhR0xPicG6187tNfia8IchhXeLezER5HDY10ibmSVGv741ZB6Miav9Okaica3LF20sAHlp0JDQlCM7xQuvdIBtxExUgCTgib6j9bOzTbZQ/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/JmAVv27H8hMy__J6qKzMRQ",
+2|wx-collector  |           "description": "🎉 2026华南口腔展，可乐丽则武齿科邀您共襄盛举！
+2|wx-collector  | 📅 展会时间：3月3日-6日
+2|wx-collector  | 📍 展位号：19.2馆 C03
+2|wx-collector  | 🌟 重磅课程推荐
+2|wx-collector  | 3月3日「可乐丽医技结合美学修复专场」
+2|wx-collector  | 👨🏻‍🏫 名师亲授，干货满满
+2|wx-collector  | 🎁 到场即享惊喜礼品，名额有限，先到先得！
+2|wx-collector  | 👉 我们在二楼会议室 204等您，不见不散！
+2|wx-collector  | 扫描图6二维码获取预登记二维码",
+2|wx-collector  |           "publish_time": "2026-02-12 18:43:54"
+2|wx-collector  |         },
+2|wx-collector  |       
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527799_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "展会预告|深圳国际口腔医学高新技术博览会",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/sz_mmecoa_jpg/DIeZoExeyG1icaSiaEeyk0EOcqCWu033zbsfKsdbibvbBt2LUp35ntjTUwQFVmjzhlpd3ZEtGiaJ5kIgT6OykkX6kA/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/bzxuVZJtg35f-tLHwP3rkw",
+2|wx-collector  |           "description": "可乐丽则武齿科与您相约深圳，12月3-5日 深圳国际会展中心见！",
+2|wx-collector  |           "publish_time": "2025-11-24 20:00:00"
+2|wx-collector  |         },
+2|wx-collector  |       
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527774_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "10.23-26日 上海世博口腔展开幕在即！",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/sz_mmecoa_jpg/DIeZoExeyG1vpWrRhwRHoib9ic9ictickTcBGb5znBQjejLtzCOaaHOr3VpMkB4SiaS1tumdlRbVEDyBQre0mmmfDibA/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/ltmYsZwQ9f47HrOtMe8hFg",
+2|wx-collector  |           "description": "一号馆 B06 B37 更多精彩等你来探寻！",
+2|wx-collector  |           "publish_time": "2025-10-20 20:34:14"
+2|wx-collector  |         },
+2|wx-collector  |       
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527765_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "9月9-12日 | FDI 2025世界口腔医学大会 开幕在即！",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/sz_mmecoa_jpg/DIeZoExeyG0uUpXnJ5z0HFdgYLTvR5YnWgyFK38sApWic7gLCaucEvITwZrAPthb589A9FhBMjgyBl63NvanykA/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/1xFJjx3CHM5_qed6VmT35A",
+2|wx-collector  |           "description": "📣 9月9-12日 | FDI 2025世界口腔医学大会 可乐丽则武齿科在 6.2号馆 N01 等你来！",
+2|wx-collector  |           "publish_time": "2025-08-22 20:00:00"
+2|wx-collector  |         },
+2|wx-collector  |       
+2|wx-collector  |         {
+2|wx-collector  |           "id": "2657527755_1",
+2|wx-collector  |           "mp_id": "MP_WXS_3204143435",
+2|wx-collector  |           "title": "📣 9月9-12日 | FDI 2025世界口腔医学大会 可乐丽则武齿科在 6.2号馆 N01 等你！",
+2|wx-collector  |           "pic_url": "http://mmecoa.qpic.cn/sz_mmecoa_jpg/DIeZoExeyG1akFOIZWz73WJicnDXNRgynLP2Rl81Qiclkpmj2xlO01WdvBm9flibAhXQqibSzW5DjlIJ8jTOFRFwcg/0?wx_fmt=jpeg",
+2|wx-collector  |           "url": "https://mp.weixin.qq.com/s/jwRqgueC2Mbl5DcOwsbnRw",
+2|wx-collector  |           "description": "👀&nbsp;看点速览：
+2|wx-collector  | 130+&nbsp;国家、3.5万+&nbsp;专业观众同场交流
+2|wx-collector  | 300+&nbsp;全球大咖现场分享前沿洞见
+2|wx-collector  | 700+&nbsp;精选展商，一站看遍口腔黑科技
+2|wx-collector  | 🌟&nbsp;我们的亮点：
+2|wx-collector  | ✅&nbsp;展位打卡——爆款产品放大模型，快来寻找你的同款打卡即送惊喜礼品！
+2|wx-collector  | ✅&nbsp;现场&nbsp;DEMO——专业技术人员现场解答产品痛点，带你了解不一样的“”修复好帮手”
+2|wx-collector  | ✅&nbsp;惊喜活动抢先看——查看图6活动海报，提前了解并参与丰富活动！📅&nbsp;时间：2025.9.9-9.12长按图5识别二维码，立即预约参观➡",
+2|wx-collector  |           "publish_time": "2025-08-15 20:02:02"
+2|wx-collector  |         }
+2|wx-collector  |       
+2|wx-collector  |     
+2|wx-collector  |   ],
+2|wx-collector  |   "task": {
+2|wx-collector  |     "id": "1c254976-ba07-4622-89b7-29ac7098da60",
+2|wx-collector  |     "name": "全量采集"
+2|wx-collector  |   },
+2|wx-collector  |   "now": "2026-04-02 17:29:22"
+2|wx-collector  | }
+2|wx-collector  | 2026-04-02 17:29:22 - ERROR - web_hook_url为空
+2|wx-collector  | ERROR:core.log:web_hook_url为空
+2|wx-collector  | 任务(1c254976-ba07-4622-89b7-29ac7098da60)[可乐丽则武齿科KurarayNoritake]执行成功,5成功条数
+2|wx-collector  | 上报任务结果失败: no running event loop
+2|wx-collector  | [可乐丽则武齿科KurarayNoritake] 本次新增文章 5 篇，开始抓取正文...
+2|wx-collector  | 公众号 可乐丽则武齿科KurarayNoritake 更新完成，新增 5 篇
+2|wx-collector  | 任务执行完成，处理 1 个公众号，共收集 5 篇文章
+2|wx-collector  | 上行 5 篇带正文文章到父节点...
+2|wx-collector  | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/claim-task "HTTP/1.1 200 OK"
+2|wx-collector  | 从父节点获取到任务: 全量采集
+2|wx-collector  | 开始执行父节点任务: 全量采集
+2|wx-collector  | INFO:httpx:HTTP Request: PUT https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/task-status "HTTP/1.1 200 OK"
