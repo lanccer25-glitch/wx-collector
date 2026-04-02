@@ -896,27 +896,8 @@ async def sync_session(
     子节点通过 Cascade AK/SK 认证获取父节点 data/key.lic 的 base64 内容，
     用于自动同步微信公众平台 Session，避免子节点因 Invalid Session 采集失败。
     """
-    key_file = "data/key.lic"
-    if not os.path.exists(key_file):
-        return error_response(
-            code=404,
-            message="父节点 session 文件不存在，请先在父节点完成微信扫码登录"
-        )
-
     try:
-        with open(key_file, "rb") as f:
-            raw = f.read()
-
-        # 粗略检验：尝试解码，若解密失败说明文件已损坏
-        from driver.store import Store
-        cookies = Store.load()
-        if not cookies:
-            return error_response(code=404, message="父节点 session 已过期或无法解密")
-
-        from driver.cookies import expire as _expire
-        exp = _expire(cookies)
-
-        # 同时返回 wx.lic（包含 token/cookie_str，供 do_job() 直接使用）
+        # ── wx.lic（含 token/cookie_str，do_job() 直接依赖） ──────────────────
         wx_lic_b64 = ""
         wx_lic_path = "data/wx.lic"
         if os.path.exists(wx_lic_path):
@@ -926,11 +907,37 @@ async def sync_session(
             except Exception:
                 pass
 
+        # ── key.lic（Playwright 原始 cookie，可选） ──────────────────────────
+        session_b64 = ""
+        cookie_count = 0
+        exp = {}
+        key_file = "data/key.lic"
+        if os.path.exists(key_file):
+            try:
+                with open(key_file, "rb") as f:
+                    raw = f.read()
+                from driver.store import Store
+                cookies = Store.load()
+                if cookies:
+                    from driver.cookies import expire as _expire
+                    exp = _expire(cookies)
+                    cookie_count = len(cookies)
+                session_b64 = base64.b64encode(raw).decode("utf-8")
+            except Exception:
+                pass
+
+        # 两个文件都不可用时才报错
+        if not session_b64 and not wx_lic_b64:
+            return error_response(
+                code=404,
+                message="父节点 session 不可用，请先在父节点完成微信扫码登录"
+            )
+
         return success_response({
-            "session_b64": base64.b64encode(raw).decode("utf-8"),
+            "session_b64": session_b64,
             "wx_lic_b64": wx_lic_b64,
-            "file_size": len(raw),
-            "cookie_count": len(cookies),
+            "file_size": len(base64.b64decode(session_b64)) if session_b64 else 0,
+            "cookie_count": cookie_count,
             "expiry": exp,
         }, "session 获取成功")
 

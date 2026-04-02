@@ -521,19 +521,22 @@ class CascadeSyncService:
         try:
             print_info("正在从父节点同步 Session...")
             result = await self.client.sync_session()
-            session_b64 = result.get("data", {}).get("session_b64", "")
-            if not session_b64:
+            # result.get("data", {}) 在 data=null 时仍返回 None，用 or {} 兜底
+            data = result.get("data") or {} if result else {}
+            session_b64 = data.get("session_b64", "")
+            wx_lic_b64 = data.get("wx_lic_b64", "")
+
+            if not session_b64 and not wx_lic_b64:
                 print_warning("父节点未返回 session 数据（可能父节点 session 已过期）")
                 return False
 
             import base64
-            session_bytes = base64.b64decode(session_b64)
-            os.makedirs("data", exist_ok=True)
-            with open("data/key.lic", "wb") as f:
-                f.write(session_bytes)
-
-            # 同步 wx.lic（包含 token 字符串和 cookie_str，do_job() 直接读取这个文件）
-            wx_lic_b64 = result.get("data", {}).get("wx_lic_b64", "")
+            # 写入 key.lic（仅当父节点有此文件时）
+            if session_b64:
+                session_bytes = base64.b64decode(session_b64)
+                os.makedirs("data", exist_ok=True)
+                with open("data/key.lic", "wb") as f:
+                    f.write(session_bytes)
             if wx_lic_b64:
                 try:
                     wx_lic_content = base64.b64decode(wx_lic_b64).decode("utf-8")
@@ -546,12 +549,15 @@ class CascadeSyncService:
                 except Exception as we:
                     print_warning(f"wx.lic 同步失败（不影响 key.lic）: {we}")
 
-            cookie_count = result.get("data", {}).get("cookie_count", "?")
-            expiry = result.get("data", {}).get("expiry", {})
+            cookie_count = data.get("cookie_count", "?")
+            expiry = data.get("expiry", {})
             expiry_time = expiry.get("expiry_time", "未知") if isinstance(expiry, dict) else "未知"
+            key_lic_size = len(base64.b64decode(session_b64)) if session_b64 else 0
+            wx_lic_size = len(base64.b64decode(wx_lic_b64)) if wx_lic_b64 else 0
             print_success(
                 f"Session 同步成功，{cookie_count} 个 cookie，"
-                f"过期时间: {expiry_time}，文件大小: {len(session_bytes)} bytes"
+                f"过期时间: {expiry_time}，"
+                f"key.lic={key_lic_size}B wx.lic={wx_lic_size}B"
             )
             return True
         except Exception as e:
