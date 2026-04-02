@@ -827,13 +827,37 @@ async def upload_articles(
         # 为新增文章触发 Notion 同步（后台线程，不阻塞响应）
         if new_article_urls:
             import threading
-            from jobs.article import _fetch_content_and_sync_notion
+            from driver.notion_sync import sync_article_to_notion
+            from core.models.feed import Feed as _Feed
+
+            def _sync_notion_for_uploaded(url: str):
+                try:
+                    _sess = DB.get_session()
+                    from core.models.article import Article as _Article
+                    art = _sess.query(_Article).filter(_Article.url == url).first()
+                    if not art:
+                        return
+                    feed = _sess.query(_Feed).filter(_Feed.id == art.mp_id).first()
+                    mp_name = getattr(feed, "mp_name", "") if feed else ""
+                    article_data = {
+                        "url": (art.url or "").strip(),
+                        "title": (art.title or "").strip(),
+                        "publish_time": art.publish_time,
+                        "description": (art.description or "").strip(),
+                        "content": (art.content or "").strip(),
+                    }
+                    sync_article_to_notion(article_data, mp_name, force=False)
+                except Exception as _e:
+                    from core.print import print_warning
+                    print_warning(f"Notion 同步失败 ({url}): {_e}")
+                finally:
+                    try:
+                        _sess.close()
+                    except Exception:
+                        pass
+
             for _url in new_article_urls:
-                threading.Thread(
-                    target=_fetch_content_and_sync_notion,
-                    args=(_url,),
-                    daemon=True,
-                ).start()
+                threading.Thread(target=_sync_notion_for_uploaded, args=(_url,), daemon=True).start()
             print_success(f"已为 {len(new_article_urls)} 篇新文章触发 Notion 同步")
 
         return success_response({
