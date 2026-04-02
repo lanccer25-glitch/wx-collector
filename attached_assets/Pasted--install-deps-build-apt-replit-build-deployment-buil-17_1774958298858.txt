@@ -1,0 +1,79 @@
+部署失败了，install-deps 在 build 阶段不能调用 apt。需要立即回滚并换方案。
+
+## 第一步：回滚 .replit build 命令
+
+把 [deployment] 的 build 行删掉或改回原来的，只保留 run：
+
+[deployment]
+run = ["python", "main.py", "-job", "True", "-init", "True"]
+
+## 第二步：改用 Nix 原生方案
+
+既然 apt 不可用，我们让 Nix 提供所有系统库。在 .replit 的 [nix] channel 下的 packages 里追加以下包（不要删除已有的包）：
+
+pkgs.atk
+pkgs.at-spi2-atk
+pkgs.at-spi2-core
+pkgs.mesa
+pkgs.libxkbcommon
+pkgs.alsa-lib
+pkgs.pango
+pkgs.cairo
+pkgs.gdk-pixbuf
+pkgs.gtk3
+pkgs.nss
+pkgs.nspr
+pkgs.xorg.libXcomposite
+pkgs.xorg.libXdamage
+pkgs.xorg.libXrandr
+pkgs.xorg.libXfixes
+pkgs.xorg.libxcb
+pkgs.xorg.libX11
+pkgs.dbus
+pkgs.expat
+pkgs.cups
+pkgs.libdrm
+pkgs.glib
+pkgs.libgbm
+
+## 第三步：设置 LD_LIBRARY_PATH
+
+在 _ensure_playwright_browsers 函数最开头（诊断日志之后），加一段动态构建 LD_LIBRARY_PATH 的代码：
+
+import subprocess, os
+
+def _build_nix_ld_path():
+    """从 Nix store 收集所有 /lib 路径注入 LD_LIBRARY_PATH"""
+    nix_packages = [
+        "atk", "at-spi2-atk", "at-spi2-core", "mesa", "libxkbcommon",
+        "alsa-lib", "pango", "cairo", "gdk-pixbuf", "gtk+3", "nss",
+        "nspr", "libXcomposite", "libXdamage", "libXrandr", "libXfixes",
+        "libxcb", "libX11", "dbus", "expat", "cups", "libdrm", "glib", "libgbm"
+    ]
+    lib_paths = set()
+    for root, dirs, files in os.walk("/nix/store"):
+        if root.endswith("/lib") and any(pkg in root for pkg in nix_packages):
+            lib_paths.add(root)
+        # 不递归太深
+        if root.count("/") > 6:
+            dirs.clear()
+    return ":".join(lib_paths)
+
+# 只在 Playwright 下载的 chrome 场景生效（Nix .chrome-wrapped 不需要）
+if not os.path.exists(nix_chrome_wrapped_path):  # 用已有的判断逻辑
+    extra_ld = _build_nix_ld_path()
+    current_ld = os.environ.get("LD_LIBRARY_PATH", "")
+    os.environ["LD_LIBRARY_PATH"] = f"{extra_ld}:{current_ld}" if current_ld else extra_ld
+    print(f"已注入 LD_LIBRARY_PATH，共 {len(extra_ld.split(':'))} 个路径")
+
+## 第四步：保留诊断日志，重新部署
+
+不要删诊断代码，部署后我需要看：
+1. Nix 包是否正确安装（系统库搜索结果）
+2. LD_LIBRARY_PATH 是否成功注入
+3. Playwright chrome 是否正常启动
+
+## 注意
+- 不要动 [deployment] run 命令
+- 不要动业务逻辑代码
+- Nix 包追加后 Replit 会自动重建环境，等环境 ready 后再部署

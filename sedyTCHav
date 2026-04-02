@@ -1,0 +1,50 @@
+modules = ["python-3.12", "nodejs-20", "vue-node-20", "web", "postgresql-16", "nix"]
+[agent]
+expertMode = true
+integrations = ["notion:1.0.0"]
+
+[nix]
+channel = "stable-25_05"
+packages = ["cacert", "cargo", "coreutils", "freetype", "geckodriver", "gitFull", "glibcLocales", "lcms2", "libffi", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pkg-config", "playwright-driver", "rustc", "tcl", "tk", "xcodebuild", "zlib"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py -job True -init True"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["python", "main.py", "-job", "True", "-init", "True"]
+
+[userenv]
+
+[userenv.shared]
+BROWSER_TYPE = "chromium"
+PLAYWRIGHT_BROWSERS_PATH = "/nix/store/kcvsxrmgwp3ffz5jijyy7wn9fcsjl4hz-playwright-browsers-1.55.0-with-cjk"
+NOTION_DATABASE_ID = "ae94ec621f5c46ac9dfafff5cc22dd44"
+TZ = "Asia/Shanghai"
+REQUIRE_LOGIN = "False"
+REPLIT_PLAYWRIGHT_CHROMIUM_EXECUTABLE = "/nix/store/kcvsxrmgwp3ffz5jijyy7wn9fcsjl4hz-playwright-browsers-1.55.0-with-cjk/chromium-1187/chrome-linux/chrome"

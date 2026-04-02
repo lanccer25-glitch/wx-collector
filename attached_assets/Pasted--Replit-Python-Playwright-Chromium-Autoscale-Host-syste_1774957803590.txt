@@ -1,0 +1,95 @@
+## 背景
+
+我的 Replit Python 项目在开发环境能正常运行 Playwright Chromium，但 Autoscale 部署后报错：
+`Host system is missing dependencies to run browser`
+
+根因：开发环境的 REPLIT_PLAYWRIGHT_CHROMIUM_EXECUTABLE 指向 Nix wrapper 脚本，
+exec 的是 .chrome-wrapped（patchelf 过，RPATH 已烘焙）。
+生产容器里 .chrome-wrapped 对应的 Nix store hash 路径不存在，
+代码回退到 playwright install chromium 下载原始 chrome，系统库缺失。
+
+## 需要你做的事
+
+### Step 1：修改 .replit，加 [deployment] build 命令
+
+在 .replit 文件中加入（如果已有 [deployment] 段则合并）：
+
+[deployment]
+build = ["bash", "-c", "python -m playwright install chromium && python -m playwright install-deps chromium"]
+run = ["python", "main.py", "-job", "True", "-init", "True"]
+
+注意：
+- 不要动 [nix]、[env]、[userenv.shared] 等现有配置
+- build 命令会在容器启动前执行一次
+- install-deps 内部调用 apt-get 安装 libatk、libgbm、libasound2 等系统库
+
+### Step 2：在启动代码中加诊断日志
+
+在 Playwright 浏览器启动之前（_launch_browser 或等效函数），加一段诊断：
+
+import subprocess, os, shutil
+
+print("=== Playwright 生产环境诊断 ===")
+
+# 1. 检查 apt 是否可用
+print(f"apt-get 存在: {shutil.which('apt-get') is not None}")
+
+# 2. 检查 Nix chrome wrapper
+nix_chrome = os.environ.get("REPLIT_PLAYWRIGHT_CHROMIUM_EXECUTABLE", "")
+print(f"Nix chrome 路径: {nix_chrome}")
+print(f"Nix chrome 存在: {os.path.exists(nix_chrome)}")
+
+if nix_chrome and os.path.exists(nix_chrome):
+    # 读取 wrapper 脚本，找 .chrome-wrapped 路径
+    with open(nix_chrome, 'r') as f:
+        content = f.read()
+    for line in content.split('\n'):
+        if '.chrome-wrapped' in line:
+            print(f"Wrapper 引用: {line.strip()}")
+            # 提取路径检查是否存在
+            import re
+            paths = re.findall(r'/nix/store/[^\s"]+\.chrome-wrapped', line)
+            for p in paths:
+                print(f"  .chrome-wrapped 路径: {p}")
+                print(f"  .chrome-wrapped 存在: {os.path.exists(p)}")
+
+# 3. 检查 playwright 安装的 chrome
+pw_chrome = os.path.expanduser("~/.cache/ms-playwright/chromium-*/chrome-linux/chrome")
+import glob
+found = glob.glob(pw_chrome)
+print(f"Playwright 下载的 chrome: {found}")
+
+# 4. 检查关键系统库
+libs = ["libatk-1.0.so", "libgbm.so", "libasound.so", "libxkbcommon.so", "libXcomposite.so"]
+for lib in libs:
+    result = subprocess.run(["find", "/usr/lib", "/nix/store", "-name", lib, "-type", "f"],
+                          capture_output=True, text=True, timeout=5)
+    found_paths = result.stdout.strip().split('\n') if result.stdout.strip() else []
+    print(f"  {lib}: {found_paths[:3]}")  # 最多显示3个
+
+print("=== 诊断结束 ===")
+
+### Step 3：部署后检查日志，根据结果判断
+
+预期结果 A（成功）：
+- apt-get 存在: True
+- install-deps 安装成功
+- 关键系统库在 /usr/lib/ 下找到
+→ 问题解决
+
+预期结果 B（apt 不可用）：
+- apt-get 存在: False
+- install-deps 报错
+→ 需要改用 Nix 原生方案或切 vm 部署类型
+
+预期结果 C（库装了但还是报错）：
+- apt-get 存在: True，库也装了
+- 但 chrome 还是找不到（LD_LIBRARY_PATH 问题）
+→ 需要在 [env] 里手动设置 LD_LIBRARY_PATH
+
+## 约束
+
+- 只改 .replit 和启动诊断代码，不要动业务逻辑
+- 保留所有现有的 [nix] packages 和 [env] 配置
+- 诊断代码用 print 输出，方便在 Replit 日志面板查看
+- 如果 build 命令导致部署失败，回滚为原始 [deployment] 配置
