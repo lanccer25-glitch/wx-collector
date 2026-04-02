@@ -1,0 +1,70 @@
+[root@VM-8-13-opencloudos wx-collector]# pm2 logs wx-collector --lines 30
+[TAILING] Tailing last 30 lines for [wx-collector] process (change the value with --lines option)
+/root/.pm2/logs/wx-collector-error.log last 30 lines:
+2|wx-colle | INFO:Sync:成功加载模型模块: user
+2|wx-colle | INFO:Sync:表已同步: access_keys
+2|wx-colle | INFO:Sync:表已同步: articles
+2|wx-colle | INFO:Sync:表已同步: cascade_nodes
+2|wx-colle | INFO:Sync:表已同步: cascade_sync_logs
+2|wx-colle | INFO:Sync:表已同步: cascade_task_allocations
+2|wx-colle | INFO:Sync:表已同步: config_management
+2|wx-colle | INFO:Sync:表已同步: feeds
+2|wx-colle | INFO:Sync:表已同步: message_tasks
+2|wx-colle | INFO:Sync:表已同步: message_tasks_logs
+2|wx-colle | INFO:Sync:表已同步: tags
+2|wx-colle | INFO:Sync:表已同步: users
+2|wx-colle | INFO:Sync:模型同步完成
+2|wx-colle | INFO:     Started server process [122321]
+2|wx-colle | INFO:     Waiting for application startup.
+2|wx-colle | INFO:     Application startup complete.
+2|wx-colle | 2026-04-02 16:25:58 - INFO - Adding cron job with expression: */59 * * * *
+2|wx-colle | INFO:core.log:Adding cron job with expression: */59 * * * *
+2|wx-colle | INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2|wx-colle | 2026-04-02 16:25:58 - INFO - Successfully added job  5081372c-c547-4bb2-bec6-d6c8000fa92f
+2|wx-colle | INFO:core.log:Successfully added job  5081372c-c547-4bb2-bec6-d6c8000fa92f
+2|wx-colle | 2026-04-02 16:25:58 - INFO - Starting scheduler...
+2|wx-colle | INFO:core.log:Starting scheduler...
+2|wx-colle | INFO:apscheduler.scheduler:Added job "TaskScheduler.add_cron_job.<locals>.wrapped_func" to job store "default"
+2|wx-colle | INFO:apscheduler.scheduler:Scheduler started
+2|wx-colle | 2026-04-02 16:25:58 - INFO - Scheduler started successfully
+2|wx-colle | INFO:core.log:Scheduler started successfully
+2|wx-colle | 2026-04-02 16:25:58 - INFO - [心跳] 保活服务已启动，检测间隔: 20 分钟
+2|wx-colle | INFO:core.log:[心跳] 保活服务已启动，检测间隔: 20 分钟
+2|wx-colle | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/claim-task "HTTP/1.1 200 OK"
+
+/root/.pm2/logs/wx-collector-out.log last 30 lines:
+2|wx-colle | 名称:we-mp-rss
+2|wx-colle | 版本:1.4.9 API_BASE:/api/v1/wx
+2|wx-colle | 认证方式：Web认证=False
+2|wx-colle | Redis URL未配置，统计功能将禁用
+2|wx-colle | [默认]连接初始化
+2|wx-colle | [用户连接]连接初始化
+2|wx-colle | [文章采集API]连接初始化
+2|wx-colle | [任务调度]连接初始化
+2|wx-colle | 队列任务后台运行
+2|wx-colle | 模型同步完成
+2|wx-colle | 用户 root 已存在，跳过初始化
+2|wx-colle | [文章采集API]连接初始化
+2|wx-colle | [任务调度]连接初始化
+2|wx-colle | 队列任务后台运行
+2|wx-colle | 级联同步服务初始化成功，父节点地址: https://haodegongzhognhaorss.replit.app
+2|wx-colle | 级联同步服务已启动，任务拉取间隔: 30秒
+2|wx-colle | 启动定期同步服务，同步间隔: 300秒
+2|wx-colle | 正在从父节点同步 Session...
+2|wx-colle | 启动子节点任务拉取器已开启定时任务
+2|wx-colle | 
+2|wx-colle | 子节点任务拉取器启动成功[默认]连接初始化
+2|wx-colle | 
+2|wx-colle | [内容修正]连接初始化
+2|wx-colle | 队列任务后台运行
+2|wx-colle | 队列已清空
+2|wx-colle | 已添自动同步文章内容任务: 5081372c-c547-4bb2-bec6-d6c8000fa92f
+2|wx-colle | 没有任务
+2|wx-colle | 已开启自动修正文章任务
+2|wx-colle | 从父节点获取到任务: 全量采集
+2|wx-colle | 开始执行父节点任务: 全量采集
+
+2|wx-collector  | INFO:httpx:HTTP Request: GET https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/sync-session "HTTP/1.1 200 OK"
+2|wx-collector  | 父节点未返回 session 数据（可能父节点 session 已过期）
+2|wx-collector  | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/heartbeat "HTTP/1.1 200 OK"
+2|wx-collector  | 心跳发送成功
