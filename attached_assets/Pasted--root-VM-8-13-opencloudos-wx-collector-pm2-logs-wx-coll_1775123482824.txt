@@ -1,0 +1,101 @@
+[root@VM-8-13-opencloudos wx-collector]# pm2 logs wx-collector --lines 60 --nostream
+[TAILING] Tailing last 60 lines for [wx-collector] process (change the value with --lines option)
+/root/.pm2/logs/wx-collector-error.log last 60 lines:
+2|wx-colle | INFO:     Application startup complete.
+2|wx-colle | INFO:Sync:cascade_task_allocations.node_id 已是 nullable，跳过迁移
+2|wx-colle | INFO:Sync:articles.updated_at_millis 已是 BIGINT，跳过迁移
+2|wx-colle | INFO:Sync:成功加载模型模块: access_key
+2|wx-colle | INFO:Sync:成功加载模型模块: article
+2|wx-colle | INFO:Sync:成功加载模型模块: base
+2|wx-colle | INFO:Sync:成功加载模型模块: cascade_node
+2|wx-colle | INFO:Sync:成功加载模型模块: cascade_task_allocation
+2|wx-colle | INFO:Sync:成功加载模型模块: config_management
+2|wx-colle | INFO:Sync:成功加载模型模块: feed
+2|wx-colle | INFO:Sync:成功加载模型模块: message_task
+2|wx-colle | INFO:Sync:成功加载模型模块: message_task_log
+2|wx-colle | INFO:Sync:成功加载模型模块: tags
+2|wx-colle | INFO:Sync:成功加载模型模块: user
+2|wx-colle | INFO:Sync:表已同步: access_keys
+2|wx-colle | INFO:Sync:表已同步: articles
+2|wx-colle | INFO:Sync:表已同步: cascade_nodes
+2|wx-colle | INFO:Sync:表已同步: cascade_sync_logs
+2|wx-colle | INFO:Sync:表已同步: cascade_task_allocations
+2|wx-colle | INFO:Sync:表已同步: config_management
+2|wx-colle | INFO:Sync:表已同步: feeds
+2|wx-colle | INFO:Sync:表已同步: message_tasks
+2|wx-colle | INFO:Sync:表已同步: message_tasks_logs
+2|wx-colle | INFO:Sync:表已同步: tags
+2|wx-colle | INFO:Sync:表已同步: users
+2|wx-colle | INFO:Sync:模型同步完成
+2|wx-colle | 2026-04-02 16:49:57 - INFO - Adding cron job with expression: */59 * * * *
+2|wx-colle | INFO:core.log:Adding cron job with expression: */59 * * * *
+2|wx-colle | INFO:apscheduler.scheduler:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2|wx-colle | 2026-04-02 16:49:57 - INFO - Successfully added job  9c8e2813-ba33-4602-abed-f89a4b4cc79a
+2|wx-colle | INFO:core.log:Successfully added job  9c8e2813-ba33-4602-abed-f89a4b4cc79a
+2|wx-colle | 2026-04-02 16:49:57 - INFO - Starting scheduler...
+2|wx-colle | INFO:core.log:Starting scheduler...
+2|wx-colle | INFO:apscheduler.scheduler:Added job "TaskScheduler.add_cron_job.<locals>.wrapped_func" to job store "default"
+2|wx-colle | INFO:apscheduler.scheduler:Scheduler started
+2|wx-colle | 2026-04-02 16:49:57 - INFO - Scheduler started successfully
+2|wx-colle | INFO:core.log:Scheduler started successfully
+2|wx-colle | 2026-04-02 16:49:57 - INFO - [心跳] 保活服务已启动，检测间隔: 20 分钟
+2|wx-colle | INFO:core.log:[心跳] 保活服务已启动，检测间隔: 20 分钟
+2|wx-colle | INFO:httpx:HTTP Request: GET https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/sync-session "HTTP/1.1 200 OK"
+2|wx-colle | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/claim-task "HTTP/1.1 200 OK"
+2|wx-colle | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/heartbeat "HTTP/1.1 200 OK"
+2|wx-colle | INFO:httpx:HTTP Request: PUT https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/task-status "HTTP/1.1 200 OK"
+2|wx-colle | INFO:driver.wx_api:模拟浏览器访问登录页面...
+2|wx-colle | INFO:driver.wx_api:请求二维码: https://mp.weixin.qq.com/cgi-bin/scanloginqrcode?action=getqrcode&uuid=747bc325bd850ffd21c607ce850ff8f3&random=1775119804824
+2|wx-colle | INFO:driver.wx_api:使用UUID: 747bc325bd850ffd21c607ce850ff8f3
+2|wx-colle | INFO:driver.wx_api:二维码获取成功，已保存到: /root/wx-collector/static/wx_qrcode.png
+2|wx-colle | INFO:driver.wx_api:二维码已保存到: /root/wx-collector/static/wx_qrcode.png
+2|wx-colle | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/report-completion "HTTP/1.1 200 OK"
+2|wx-colle | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/claim-task "HTTP/1.1 200 OK"
+2|wx-colle | INFO:httpx:HTTP Request: PUT https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/task-status "HTTP/1.1 200 OK"
+2|wx-colle | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/report-completion "HTTP/1.1 200 OK"
+2|wx-colle | 2026-04-02 16:50:57 - WARNING - [心跳] Session 已失效，尝试 Token 恢复登录…
+2|wx-colle | WARNING:core.log:[心跳] Session 已失效，尝试 Token 恢复登录…
+2|wx-colle | 2026-04-02 16:50:57 - WARNING - [心跳] 无存储 Token，请到管理后台扫码登录
+2|wx-colle | WARNING:core.log:[心跳] 无存储 Token，请到管理后台扫码登录
+2|wx-colle | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/heartbeat "HTTP/1.1 200 OK"
+2|wx-colle | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/claim-task "HTTP/1.1 200 OK"
+2|wx-colle | INFO:httpx:HTTP Request: PUT https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/task-status "HTTP/1.1 200 OK"
+2|wx-colle | INFO:httpx:HTTP Request: POST https://haodegongzhognhaorss.replit.app/api/v1/wx/cascade/report-completion "HTTP/1.1 200 OK"
+
+/root/.pm2/logs/wx-collector-out.log last 60 lines:
+2|wx-colle | item end
+2|wx-colle | ZUMAX速迈医学 处理完成等待5秒后继续...
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | 微信公众平台登录脚本正在运行，请勿重复运行
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | 抓取失败 ZUMAX速迈医学: Invalid Session, stop at 0
+2|wx-colle | 任务结果上报成功
+2|wx-colle | 任务执行完成: 全量采集
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | 心跳发送成功
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | 从父节点获取到任务: 全量采集
+2|wx-colle | 开始执行父节点任务: 全量采集
+2|wx-colle | {'acct_size': 0, 'base_resp': {'err_msg': 'ok', 'ret': 0}, 'binduin': 0, 'status': 0, 'user_category': 0}
+2|wx-colle | 处理公众号: DentalDirekt丹特迪瑞
+2|wx-colle | 采集模式:web
+2|wx-colle | 成功0条
+2|wx-colle | 请先扫码登录公众号平台
+2|wx-colle | Web浏览器模式,是否采集[DentalDirekt丹特迪瑞]内容：False
+2|wx-colle | 
+2|wx-colle | 第1页开始爬取
