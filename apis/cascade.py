@@ -799,17 +799,20 @@ async def upload_articles(
                 new_count += 1
                 if raw_content:
                     content_count += 1
-                _article_url = (article_data.get("url") or "").strip()
-                if _article_url:
-                    new_article_urls.append(_article_url)
+                    _article_url = (article_data.get("url") or "").strip()
+                    if _article_url:
+                        new_article_urls.append(_article_url)
             else:
                 # 更新现有文章（只要上行的字段有值就覆盖）
                 existing.title = article_data.get("title") or existing.title
                 if raw_content and not (existing.content or "").strip():
-                    # 补充缺失的正文
+                    # 补充缺失的正文，并触发 Notion 同步
                     existing.content = raw_content
                     existing.content_html = _fix_html(raw_content)
                     content_count += 1
+                    _article_url = (existing.url or "").strip()
+                    if _article_url:
+                        new_article_urls.append(_article_url)
                 existing.updated_at = int(datetime.utcnow().timestamp())
                 existing.updated_at_millis = int(datetime.utcnow().timestamp() * 1000)
 
@@ -824,18 +827,23 @@ async def upload_articles(
             f"补充正文{content_count}篇"
         )
 
-        # 为新增文章触发 Notion 同步（后台线程，不阻塞响应）
+        # 为有正文的文章触发 Notion 同步（后台线程，不阻塞响应）
         if new_article_urls:
             import threading
+            import time as _time
             from driver.notion_sync import sync_article_to_notion
             from core.models.feed import Feed as _Feed
 
             def _sync_notion_for_uploaded(url: str):
+                _sess = None
                 try:
                     _sess = DB.get_session()
                     from core.models.article import Article as _Article
                     art = _sess.query(_Article).filter(_Article.url == url).first()
                     if not art:
+                        return
+                    content_str = (art.content or "").strip()
+                    if not content_str:
                         return
                     feed = _sess.query(_Feed).filter(_Feed.id == art.mp_id).first()
                     mp_name = getattr(feed, "mp_name", "") if feed else ""
@@ -844,21 +852,31 @@ async def upload_articles(
                         "title": (art.title or "").strip(),
                         "publish_time": art.publish_time,
                         "description": (art.description or "").strip(),
-                        "content": (art.content or "").strip(),
+                        "content": content_str,
                     }
-                    sync_article_to_notion(article_data, mp_name, force=False)
+                    for _attempt in range(3):
+                        try:
+                            sync_article_to_notion(article_data, mp_name, force=False)
+                            return
+                        except Exception as _retry_e:
+                            if _attempt < 2:
+                                _time.sleep(5)
+                            else:
+                                from core.print import print_warning
+                                print_warning(f"[Notion] 同步失败(已重试3次) {url[:60]}: {_retry_e}")
                 except Exception as _e:
                     from core.print import print_warning
-                    print_warning(f"Notion 同步失败 ({url}): {_e}")
+                    print_warning(f"Notion 同步线程异常 ({url}): {_e}")
                 finally:
-                    try:
-                        _sess.close()
-                    except Exception:
-                        pass
+                    if _sess:
+                        try:
+                            _sess.close()
+                        except Exception:
+                            pass
 
             for _url in new_article_urls:
                 threading.Thread(target=_sync_notion_for_uploaded, args=(_url,), daemon=True).start()
-            print_success(f"已为 {len(new_article_urls)} 篇新文章触发 Notion 同步")
+            print_success(f"已为 {len(new_article_urls)} 篇有正文文章触发 Notion 同步")
 
         return success_response({
             "received": len(req.articles),
