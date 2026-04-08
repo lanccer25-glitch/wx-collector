@@ -15,12 +15,183 @@
   <meta name="author" content="Rachel" />
   <script src="https://hm.baidu.com/hm.js?975de8724ac02eb7e6d2357bb95c067d"></script>
   <title>好D公众号订阅</title>
-  <script type="module" crossorigin src="/assets/index.1815093f.js"></script>
-  <link rel="stylesheet" href="/assets/index.cb2c2097.css">
+  <style>
+    #gate-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f2027 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    #gate-overlay.hidden { display: none; }
+    .gate-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 48px 44px 44px;
+      width: 360px;
+      max-width: 90vw;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px);
+      text-align: center;
+    }
+    .gate-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      margin: 0 auto 20px;
+      display: block;
+      object-fit: contain;
+    }
+    .gate-title {
+      color: #f1f5f9;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      letter-spacing: 0.3px;
+    }
+    .gate-subtitle {
+      color: #94a3b8;
+      font-size: 13px;
+      margin: 0 0 32px;
+    }
+    .gate-input-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .gate-input {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      color: #f1f5f9;
+      font-size: 15px;
+      padding: 13px 46px 13px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .gate-input::placeholder { color: #64748b; }
+    .gate-input:focus { border-color: #6366f1; }
+    .gate-input.error { border-color: #ef4444; animation: shake 0.3s; }
+    .gate-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #64748b;
+      padding: 0;
+      font-size: 17px;
+      line-height: 1;
+    }
+    .gate-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 13px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.4px;
+    }
+    .gate-btn:hover { opacity: 0.9; }
+    .gate-btn:active { transform: scale(0.98); }
+    .gate-error {
+      color: #f87171;
+      font-size: 13px;
+      margin-top: 10px;
+      min-height: 18px;
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+  </style>
 </head>
 
 <body>
+  <div id="gate-overlay">
+    <div class="gate-card">
+      <img class="gate-logo" src="/static/logo.png" onerror="this.style.display='none'" alt="logo" />
+      <h1 class="gate-title">好D公众号订阅</h1>
+      <p class="gate-subtitle">请输入访问密码以继续</p>
+      <div class="gate-input-wrap">
+        <input id="gate-pwd" class="gate-input" type="password" placeholder="访问密码" autocomplete="off" />
+        <button class="gate-toggle" id="gate-eye" tabindex="-1" type="button">👁</button>
+      </div>
+      <button class="gate-btn" id="gate-submit">进入</button>
+      <div class="gate-error" id="gate-msg"></div>
+    </div>
+  </div>
+
   <div id="app"></div>
-  
+  <script type="module" crossorigin src="/assets/index.1815093f.js"></script>
+  <link rel="stylesheet" href="/assets/index.cb2c2097.css">
+
+  <script>
+    (function() {
+      var HASH = "1ddb8f7ebcde3ad37ce4088783e22e45238fb03382e98bbebef57c1be45efd56";
+      var KEY  = "hd_gate_ok";
+      var overlay = document.getElementById("gate-overlay");
+
+      function isUnlocked() {
+        try { return sessionStorage.getItem(KEY) === "1"; } catch(e) { return false; }
+      }
+      function setUnlocked() {
+        try { sessionStorage.setItem(KEY, "1"); } catch(e) {}
+      }
+
+      async function sha256(str) {
+        var buf = new TextEncoder().encode(str);
+        var hash = await crypto.subtle.digest("SHA-256", buf);
+        return Array.from(new Uint8Array(hash)).map(function(b){
+          return b.toString(16).padStart(2, "0");
+        }).join("");
+      }
+
+      if (isUnlocked()) {
+        overlay.classList.add("hidden");
+        return;
+      }
+
+      document.getElementById("gate-eye").addEventListener("click", function() {
+        var inp = document.getElementById("gate-pwd");
+        inp.type = inp.type === "password" ? "text" : "password";
+      });
+
+      function tryUnlock() {
+        var val = document.getElementById("gate-pwd").value;
+        var inp = document.getElementById("gate-pwd");
+        var msg = document.getElementById("gate-msg");
+        if (!val) { msg.textContent = "请输入密码"; return; }
+        sha256(val).then(function(h) {
+          if (h === HASH) {
+            setUnlocked();
+            overlay.classList.add("hidden");
+          } else {
+            msg.textContent = "密码错误，请重试";
+            inp.classList.add("error");
+            inp.value = "";
+            setTimeout(function(){ inp.classList.remove("error"); }, 600);
+          }
+        });
+      }
+
+      document.getElementById("gate-submit").addEventListener("click", tryUnlock);
+      document.getElementById("gate-pwd").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") tryUnlock();
+      });
+    })();
+  </script>
 </body>
 </html>
